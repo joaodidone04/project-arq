@@ -97,3 +97,28 @@ function clearAll() {
   operator = null;
   display.value = "";
 }
+
+const signButton = document.getElementById("signButton");
+signButton.addEventListener("click", toggleSign);
+function toggleSign() {
+  if (currentValue === "") return;
+  const num = parseFloat(currentValue);
+  currentValue = (-num).toString();
+  updateDisplay();
+}
+
+const percentageButton = document.getElementById("percentageButton");
+percentageButton.addEventListener("click", convertToPercentage);
+
+function convertToPercentage() {
+  if (currentValue === "") return;
+
+  const current = Number(currentValue);
+  if(previousValue !== ""){
+    const previous = Number(previousValue);
+    currentValue = ((previous*current)/100).toString();
+  }else{
+    currentValue = (current/100).toString();
+  }
+  updateDisplay();
+} 
