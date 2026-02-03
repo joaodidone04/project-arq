@@ -9,36 +9,44 @@ let currentValue = "";
 let previousValue = "";
 let operator = null;
 
+function updateDisplay() {
+  const opSymbol = operator ?? "";
+  display.value = `${previousValue}${opSymbol}${currentValue}`;
+}
+
+
 function addNumber(value) {
   currentValue += value;
-  display.value = currentValue;
+  updateDisplay();
 }
 
 numberButtons.forEach((button) => {
   button.addEventListener("click", () => addNumber(button.innerText));
 });
 
-operatorButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    if (!button.dataset.op) return; // blindagem
-    if (currentValue === "") return;
+operatorButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    if (currentValue === "" && previousValue === "") return;
 
-    previousValue = currentValue;
-    operator = button.dataset.op;
-    currentValue = "";
-    display.value = "";
+    if (previousValue === "") {
+      previousValue = currentValue;
+      currentValue = "";
+    }
+
+    operator = btn.dataset.op || btn.innerText; // fallback
+    updateDisplay();
   });
 });
+
+
 
 equalsButton?.addEventListener("click", calculate);
 
 function calculate() {
-  console.log({ previousValue, currentValue, operator });
-
   if (previousValue === "" || currentValue === "" || !operator) return;
 
-  const num1 = Number(previousValue);
-  const num2 = Number(currentValue);
+  const num1 = parseFloat(previousValue);
+  const num2 = parseFloat(currentValue);
   let result;
 
   switch (operator) {
@@ -46,15 +54,37 @@ function calculate() {
     case "-": result = num1 - num2; break;
     case "*": result = num1 * num2; break;
     case "/":
-      if (num2 === 0) return alert("Não pode dividir por zero");
+      if (num2 === 0) return alert("Não pode dividir por 0");
       result = num1 / num2;
       break;
     default:
-      return;
+      return; // operador inválido
   }
 
   display.value = result;
-  currentValue = String(result);
+  currentValue = result.toString();
   previousValue = "";
   operator = null;
 }
+
+
+
+const backspaceBtn = document.getElementById("backspaceButton");
+
+backspaceBtn.addEventListener("click", backspace);
+
+function backspace() {
+  if (currentValue !== "") {
+    currentValue = currentValue.slice(0, -1);
+    updateDisplay();
+    return;
+  }
+
+  if (operator !== null) {
+    operator = null;
+    currentValue = previousValue;
+    previousValue = "";
+    updateDisplay();
+  }
+}
+
