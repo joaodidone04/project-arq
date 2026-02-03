@@ -88,3 +88,12 @@ function backspace() {
   }
 }
 
+const allClearButton = document.getElementById("allClearButton");
+
+allClearButton.addEventListener("click", clearAll);
+function clearAll() {
+  currentValue = "";
+  previousValue = "";
+  operator = null;
+  display.value = "";
+}

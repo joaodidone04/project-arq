@@ -64,3 +64,35 @@ h1{
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
 }
+
+#allClearButton {
+    border-radius: 100%;
+    align-items: center;
+    background-color: #f39c12;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#equalsButton{
+    border-radius: 100%;
+    align-items: center;
+    background-color: #f39c12;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
