@@ -34,6 +34,12 @@ function addTransaction() {
   typeSelect.value = "income";
 }
 
+dateInput.addEventListener("change", () => {
+  const selectedDate = new Date(dateInput.value);
+  const month = selectedDate.getMonth() + 1;
+
+  console.log( month);
+})
 
 function renderTransactions() {
   transactionList.innerHTML = "";
@@ -66,5 +72,3 @@ function calculateTotal() {
 
   console.log("Income:", incomeTotal, "Expense:", expenseTotal, "Balance:", balanceTotal);
 }
-
-balanceTotal > 0 ? balance.classList.add("positive") : balance.classList.add("negative");
