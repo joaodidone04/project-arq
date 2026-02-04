@@ -8,6 +8,7 @@ const transactionList = document.getElementById("transactionList");
 const income = document.getElementById("income");
 const expense = document.getElementById("expense");
 const balance = document.getElementById("balance");
+const dateInput = document.getElementById("dateInput");
 
 
 addButton.addEventListener("click", addTransaction);
@@ -16,10 +17,11 @@ function addTransaction() {
   const description = descriptionInput.value.trim();
   const amount = parseFloat(amountInput.value);
   const type = typeSelect.value;
+  const date = dateInput.value;
 
-  if (description === "" || isNaN(amount)) return;
+  if (description === "" || isNaN(amount) || !date) return;
 
-  const newTransaction = { description, amount, type };
+  const newTransaction = { description, amount, type, date };
 
   transactions.push(newTransaction);
 
@@ -28,6 +30,7 @@ function addTransaction() {
 
   descriptionInput.value = "";
   amountInput.value = "";
+  dateInput.value = "";
   typeSelect.value = "income";
 }
 
@@ -41,9 +44,8 @@ function renderTransactions() {
     const sign = t.type === "expense" ? "-" : "+";
     const label = t.type === "expense" ? "Despesa" : "Receita";
 
-    li.textContent = `${sign} ${label} | ${t.description} - R$ ${t.amount.toFixed(2)}`;
+    li.textContent = `${sign} ${label} | ${t.description} - R$ ${t.amount.toFixed(2)} / ${t.date}`;
     li.classList.add(t.type);
-
     transactionList.appendChild(li);
   });
 }
@@ -64,3 +66,5 @@ function calculateTotal() {
 
   console.log("Income:", incomeTotal, "Expense:", expenseTotal, "Balance:", balanceTotal);
 }
+
+balanceTotal > 0 ? balance.classList.add("positive") : balance.classList.add("negative");
